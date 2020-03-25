@@ -1,7 +1,11 @@
+//read environment variables
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
-const productsRouter = require("./api/products");
-const ordersRouter = require("./api/orders");
+const productsRouter = require("./api/Routes/products");
+const ordersRouter = require("./api/Routes/orders");
+const usersRouter = require("./api/Routes/users");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -54,7 +58,8 @@ app.get("/", (req, res, next) => {
 });
 app.use("/products", productsRouter);
 app.use("/orders", ordersRouter);
-app.use("/uploads",express.static("uploads"))
+app.use("/users", usersRouter);
+app.use("/uploads", express.static("uploads"));
 
 //error handling
 app.use((req, res, next) => {

@@ -1,13 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
-const Order = require("./models/order");
-const Product = require("./models/product");
+
+const Order = require("../models/order");
+const Product = require("../models/product"); 
 
 router.get("/", (req, res, next) => {
   Order.find()
     .select("product quantity _id")
-    .populate("product","name")
+    .populate("product", "name")
     .exec()
     .then(docs => {
       if (docs) {
@@ -144,16 +145,18 @@ router.patch("/:orderid", (req, res, next) => {
 
 //for delete request
 router.delete("/:orderid", (req, res, next) => {
-  Order.remove({ _id: req.params.orderid }).exec().then(result => {
-    res.status(200).json({
-      message: "Order deleted",
-      request: {
-        type: "GET",
-        description: "return to all orders",
-        url: "http://localhost:3000/orders/"
-      }
-    })
-  });
+  Order.remove({ _id: req.params.orderid })
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        message: "Order deleted",
+        request: {
+          type: "GET",
+          description: "return to all orders",
+          url: "http://localhost:3000/orders/"
+        }
+      });
+    });
 });
 
 //exporting modules
